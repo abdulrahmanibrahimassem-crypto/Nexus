@@ -1,0 +1,32 @@
+{
+  "locale": "zh",
+  "direction": "ltr",
+  "name": "Chinese",
+  "nativeName": "中文",
+  "translations": {
+    "dashboard.title": "Zenith Core 仪表板",
+    "dashboard.academic_suite": "学术与开发套件",
+    "dashboard.command_center": "学术指挥中心",
+    "dashboard.sanctuary_studio": "庇护所工作室",
+    "dashboard.quick_add": "快速添加 (NLP)",
+    "dashboard.ambient_stream": "活动环境流",
+    "nav.overview": "概览",
+    "nav.study": "学习会话",
+    "nav.analytics": "分析",
+    "nav.settings": "设置",
+    "habit.title": "学习习惯与连续打卡追踪器",
+    "habit.subtitle": "持续日常执行图 — 90天学术一致性热力图与每日目标",
+    "habit.manage_goals": "管理每日目标",
+    "habit.log_work": "记录深度工作 (+1.5h)",
+    "habit.current_streak": "当前连续天数",
+    "habit.best_record": "个人最佳记录",
+    "habit.total_hours": "总深度学习时间",
+    "habit.todays_objectives": "今日学习目标",
+    "habit.completed": "已完成",
+    "habit.pending": "待处理",
+    "habit.contribution_matrix": "90天贡献矩阵",
+    "habit.sessions_completed": "个会话已完成",
+    "habit.less_consistency": "较低一致性",
+    "habit.elite_flow": "精英心流 (级别 4)"
+  }
+}

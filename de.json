@@ -1,0 +1,32 @@
+{
+  "locale": "de",
+  "direction": "ltr",
+  "name": "German",
+  "nativeName": "Deutsch",
+  "translations": {
+    "dashboard.title": "Zenith Core Dashboard",
+    "dashboard.academic_suite": "Akademische & Entwickler-Suite",
+    "dashboard.command_center": "Akademisches Kommandozentrum",
+    "dashboard.sanctuary_studio": "Sanktuarium Studio",
+    "dashboard.quick_add": "Schnell hinzufügen (NLP)",
+    "dashboard.ambient_stream": "Aktiver Ambient-Stream",
+    "nav.overview": "Übersicht",
+    "nav.study": "Studiensitzungen",
+    "nav.analytics": "Analytik",
+    "nav.settings": "Einstellungen",
+    "habit.title": "Lernangewohnheiten- und Serien-Tracker",
+    "habit.subtitle": "Tägliches Ausführungsdiagramm — 90-Tage-Konsistenz-Heatmap und Tagesziele",
+    "habit.manage_goals": "Tagesziele Verwalten",
+    "habit.log_work": "Deep Work Protokollieren (+1.5h)",
+    "habit.current_streak": "Aktuelle Aktive Serie",
+    "habit.best_record": "Persönlicher Bestwert",
+    "habit.total_hours": "Gesamte Deep-Study-Stunden",
+    "habit.todays_objectives": "Heutige Lernziele",
+    "habit.completed": "Abgeschlossen",
+    "habit.pending": "Ausstehend",
+    "habit.contribution_matrix": "90-Tage-Beitragsmatrix",
+    "habit.sessions_completed": "Sitzungen abgeschlossen",
+    "habit.less_consistency": "Geringere Konsistenz",
+    "habit.elite_flow": "Elite Flow (Stufe 4)"
+  }
+}

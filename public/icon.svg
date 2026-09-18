@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="auroraGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#60a5fa" stop-opacity="0.25"/>
+      <stop offset="75%" stop-color="#9333ea" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#090d16" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pageGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e0f2fe"/>
+    </linearGradient>
+    <linearGradient id="goldStar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  <rect width="510" height="510" x="1" y="1" rx="111" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+
+  <!-- Glowing Aurora Orb -->
+  <circle cx="256" cy="256" r="180" fill="url(#auroraGlow)"/>
+
+  <!-- Outer Glass Ring -->
+  <circle cx="256" cy="265" r="140" fill="none" stroke="rgba(96,165,250,0.35)" stroke-width="3" stroke-dasharray="8 6"/>
+
+  <!-- Stylized Open Book / Sanctuary Crest -->
+  <!-- Left Page -->
+  <path d="M256 340 C210 320, 160 325, 120 345 C120 250, 120 220, 120 215 C165 195, 215 198, 256 220 Z" 
+        fill="url(#pageGrad)" 
+        stroke="rgba(255,255,255,0.4)" 
+        stroke-width="2" 
+        filter="drop-shadow(0 4px 12px rgba(0,0,0,0.5))"/>
+
+  <!-- Right Page -->
+  <path d="M256 340 C302 320, 352 325, 392 345 C392 250, 392 220, 392 215 C347 195, 297 198, 256 220 Z" 
+        fill="url(#pageGrad)" 
+        stroke="rgba(255,255,255,0.4)" 
+        stroke-width="2" 
+        filter="drop-shadow(0 4px 12px rgba(0,0,0,0.5))"/>
+
+  <!-- Book Spine Center Glow -->
+  <line x1="256" y1="218" x2="256" y2="342" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Study Sanctuary Star Crest -->
+  <g transform="translate(256, 148)">
+    <circle cx="0" cy="0" r="22" fill="#fbbf24" opacity="0.25" filter="blur(6px)"/>
+    <!-- 4-point star -->
+    <path d="M0 -22 L5 -7 L20 0 L5 7 L0 22 L-5 7 L-20 0 L-5 -7 Z" fill="url(#goldStar)"/>
+    <circle cx="0" cy="0" r="3" fill="#ffffff"/>
+  </g>
+</svg>

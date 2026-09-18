@@ -1,0 +1,32 @@
+{
+  "locale": "hi",
+  "direction": "ltr",
+  "name": "Hindi",
+  "nativeName": "हिन्दी",
+  "translations": {
+    "dashboard.title": "ज़ेनिथ कोर डैशबोर्ड",
+    "dashboard.academic_suite": "विकास और शैक्षणिक सुइट",
+    "dashboard.command_center": "शैक्षणिक कमांड सेंटर",
+    "dashboard.sanctuary_studio": "अभयारण्य स्टूडियो",
+    "dashboard.quick_add": "त्वरित जोड़ें (NLP)",
+    "dashboard.ambient_stream": "सक्रिय एम्बिएंट स्ट्रीम",
+    "nav.overview": "सिंहावलोकन",
+    "nav.study": "अध्ययन सत्र",
+    "nav.analytics": "विश्लेषण",
+    "nav.settings": "सेटिंग्स",
+    "habit.title": "अध्ययन की आदत और स्ट्रीक कंट्रीब्यूशन ट्रैकर",
+    "habit.subtitle": "निरंतर दैनिक निष्पादन ग्राफ — 90-दिवसीय शैक्षणिक स्थिरता हीट मैप और दैनिक लक्ष्य",
+    "habit.manage_goals": "दैनिक लक्ष्य प्रबंधित करें",
+    "habit.log_work": "डीप वर्क लॉग करें (+1.5h)",
+    "habit.current_streak": "वर्तमान सक्रिय स्ट्रीक",
+    "habit.best_record": "व्यक्तिगत सर्वश्रेष्ठ रिकॉर्ड",
+    "habit.total_hours": "कुल गहन अध्ययन घंटे",
+    "habit.todays_objectives": "आज के सीखने के उद्देश्य",
+    "habit.completed": "पूर्ण",
+    "habit.pending": "लंबित",
+    "habit.contribution_matrix": "90-दिवसीय योगदान मैट्रिक्स",
+    "habit.sessions_completed": "सत्र पूर्ण",
+    "habit.less_consistency": "कम स्थिरता",
+    "habit.elite_flow": "एलीट फ्लो (स्तर 4)"
+  }
+}

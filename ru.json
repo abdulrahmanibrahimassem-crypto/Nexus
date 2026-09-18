@@ -1,0 +1,32 @@
+{
+  "locale": "ru",
+  "direction": "ltr",
+  "name": "Russian",
+  "nativeName": "Русский",
+  "translations": {
+    "dashboard.title": "Панель управления Zenith Core",
+    "dashboard.academic_suite": "Академический и разработческий набор",
+    "dashboard.command_center": "Академический командный центр",
+    "dashboard.sanctuary_studio": "Студия Убежище",
+    "dashboard.quick_add": "Быстрое добавление (NLP)",
+    "dashboard.ambient_stream": "Активный фоновый поток",
+    "nav.overview": "Обзор",
+    "nav.study": "Учебные сессии",
+    "nav.analytics": "Аналитика",
+    "nav.settings": "Настройки",
+    "habit.title": "Трекер учебных привычек и серий",
+    "habit.subtitle": "График ежедневной продуктивности — 90-дневная тепловая карта и цели",
+    "habit.manage_goals": "Управление Целями",
+    "habit.log_work": "Записать Глубокую Работу (+1.5ч)",
+    "habit.current_streak": "Текущая Серия",
+    "habit.best_record": "Личный Рекорд",
+    "habit.total_hours": "Всего Часов Глубокой Учебы",
+    "habit.todays_objectives": "Цели Обучения на Сегодня",
+    "habit.completed": "Выполнено",
+    "habit.pending": "В ожидании",
+    "habit.contribution_matrix": "90-Дневная Матрица Вклада",
+    "habit.sessions_completed": "сессий завершено",
+    "habit.less_consistency": "Меньше постоянства",
+    "habit.elite_flow": "Элитный Поток (Уровень 4)"
+  }
+}

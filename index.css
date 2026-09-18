@@ -1,0 +1,1811 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #0b0f19;
+    --text-primary: var(--mode-text-tint, #ffffff);
+    --text-secondary: var(--mode-accent, #cbd5e1);
+    --text-muted: #94a3b8;
+    --text-contrast-multiplier: 1.0;
+    --text-contrast-modifier: 1.0;
+    --text-shadow-intensity: 0.9;
+    --glass-text-weight: 500;
+
+    /* Dynamic Atmosphere Mode Tokens */
+    --mode-accent: #60a5fa;
+    --mode-glow: rgba(96, 165, 250, 0.35);
+    --mode-text-tint: #eff6ff;
+    --mode-text-main: #ffffff;
+    --mode-text-muted: #cbd5e1;
+    --mode-accent-glow: rgba(96, 165, 250, 0.45);
+    --mode-border-accent: rgba(96, 165, 250, 0.45);
+    --mode-badge-bg: rgba(96, 165, 250, 0.15);
+    --mode-aurora-grad: radial-gradient(circle, rgba(96, 165, 250, 0.15) 0%, rgba(37, 99, 235, 0.08) 40%, transparent 70%);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Inter", "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #090d16 0%, #111827 50%, #0f172a 100%);
+    color: var(--mode-text-main, #ffffff);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.022em;
+    font-weight: 700;
+    color: var(--mode-text-main, #ffffff);
+    transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.3s ease;
+  }
+
+  p, span, label, button, a {
+    font-weight: 500;
+    color: inherit;
+  }
+
+  /* Aurora Atmospheric Background Effect */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: -20%;
+    width: 70vw;
+    height: 70vh;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(147, 51, 234, 0.08) 40%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* High Opacity Apple Glassmorphism Classes (Dynamic Opacity & Dark Frosted Glass Standard) */
+.apple-glass,
+.apple-glass-panel,
+.kanban-column,
+.priority-matrix-card {
+  background: rgba(15, 23, 42, 0.25) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 8px 32px 0 rgba(0, 0, 0, 0.35) !important;
+  color: #ffffff !important;
+  position: relative;
+  z-index: 10;
+}
+
+/* Global Text Shadow for Absolute Legibility over Transparent Glass */
+.workspace-container *, h1, h2, h3, h4, h5, h6, p, span, label {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.apple-glass-card {
+  /* Computed CSS variable '--text-contrast-modifier' automatically adjusting font-weight and text-shadow intensity based on calculated luminance of active atmosphere mode */
+  --atmosphere-luminance: var(--mode-luminance, 0.38);
+  --text-contrast-modifier: calc(0.88 + (var(--atmosphere-luminance, 0.38) * 0.72));
+  --text-shadow-intensity: calc(0.76 + (var(--atmosphere-luminance, 0.38) * 0.24));
+  --computed-glass-font-weight: calc(var(--glass-text-weight, 500) + (var(--text-contrast-modifier, 1.0) - 1.0) * 120);
+  --computed-heading-font-weight: calc(var(--glass-text-weight, 500) + 180 + (var(--text-contrast-modifier, 1.0) - 1.0) * 140);
+  --computed-text-shadow: 0 1px 2px rgba(0, 0, 0, calc(0.92 * var(--text-shadow-intensity, 0.88))), 0 calc(1.5px * var(--text-contrast-modifier, 1.0)) calc(5px * var(--text-contrast-modifier, 1.0)) rgba(0, 0, 0, calc(0.85 * var(--text-shadow-intensity, 0.88)));
+  --computed-heading-shadow: 0 1px 3px rgba(0, 0, 0, 0.96), 0 calc(2px * var(--text-contrast-modifier, 1.0)) calc(7px * var(--text-contrast-modifier, 1.0)) rgba(0, 0, 0, calc(0.94 * var(--text-shadow-intensity, 0.92)));
+
+  background: rgba(15, 23, 42, 0.25) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+  color: #ffffff !important;
+  text-shadow: var(--computed-text-shadow) !important;
+  font-weight: var(--computed-glass-font-weight);
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+  scroll-snap-align: start;
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.3s ease, font-weight 0.3s ease !important;
+}
+
+.apple-glass-card,
+.apple-glass-card *,
+.apple-glass-card p,
+.apple-glass-card span,
+.apple-glass-card label,
+.apple-glass-card div,
+.apple-glass-card a,
+.apple-glass-card li,
+.apple-glass-card input,
+.apple-glass-card button:not(.btn-accent):not([class*="bg-amber"]):not([class*="bg-emerald"]) {
+  color: #ffffff;
+  text-shadow: var(--computed-text-shadow) !important;
+  font-weight: var(--computed-glass-font-weight);
+}
+
+.apple-glass-card h1, 
+.apple-glass-card h2, 
+.apple-glass-card h3, 
+.apple-glass-card h4,
+.apple-glass-card h5,
+.apple-glass-card h6 {
+  color: #ffffff !important;
+  text-shadow: var(--computed-heading-shadow) !important;
+  font-weight: var(--computed-heading-font-weight) !important;
+}
+
+/* Light Refraction (Caustics) Slow-Moving Translucent Gradient Animation */
+@keyframes glassCausticsRefraction {
+  0% {
+    background-position: 0% 0%, 100% 100%, 0% 50%, var(--mouse-x, 50%) var(--mouse-y, 50%);
+    opacity: calc(0.38 + (var(--atmosphere-luminance, 0.38) * 0.18));
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  33% {
+    background-position: 45% 65%, 65% 25%, 35% 85%, var(--mouse-x, 50%) var(--mouse-y, 50%);
+    opacity: calc(0.48 + (var(--atmosphere-luminance, 0.38) * 0.22));
+    transform: scale(1.02) translate3d(-1%, 1%, 0);
+  }
+  66% {
+    background-position: 85% 35%, 25% 75%, 75% 15%, var(--mouse-x, 50%) var(--mouse-y, 50%);
+    opacity: calc(0.42 + (var(--atmosphere-luminance, 0.38) * 0.19));
+    transform: scale(1.01) translate3d(1%, -1%, 0);
+  }
+  100% {
+    background-position: 0% 0%, 100% 100%, 0% 50%, var(--mouse-x, 50%) var(--mouse-y, 50%);
+    opacity: calc(0.38 + (var(--atmosphere-luminance, 0.38) * 0.18));
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+/* Subtle Animated Overlay Layer Mimicking Light Refraction (Caustics) & 3D Specular Highlight */
+.apple-glass-card::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: inherit;
+  background-image: 
+    /* Caustic refraction wave 1: undulating organic bright refraction curve */
+    radial-gradient(
+      ellipse 65% 55% at 28% 32%,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.05) 35%,
+      transparent 70%
+    ),
+    /* Caustic refraction wave 2: atmospheric glow harmonic counter-flow */
+    radial-gradient(
+      ellipse 75% 60% at 76% 68%,
+      var(--mode-glow, rgba(255, 255, 255, 0.14)) 0%,
+      rgba(255, 255, 255, 0.04) 40%,
+      transparent 72%
+    ),
+    /* Caustic refraction band 3: slow shifting prismatic linear light ribbon */
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.02) 25%,
+      rgba(255, 255, 255, 0.08) 48%,
+      rgba(255, 255, 255, 0.02) 65%,
+      transparent 100%
+    ),
+    /* Interactive 3D specular light spotlight tracking mouse coordinates */
+    radial-gradient(
+      420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(255, 255, 255, 0.22) 0%,
+      var(--mode-glow, rgba(255, 255, 255, 0.08)) 28%,
+      transparent 65%
+    );
+  background-size: 190% 190%, 210% 210%, 230% 230%, auto;
+  pointer-events: none;
+  z-index: 1;
+  opacity: calc(0.38 + (var(--atmosphere-luminance, 0.38) * 0.18));
+  mix-blend-mode: screen;
+  filter: blur(12px);
+  animation: glassCausticsRefraction 22s ease-in-out infinite;
+  will-change: background-position, transform, opacity;
+  transition: opacity 0.4s ease;
+}
+
+.apple-glass-card:hover::before {
+  opacity: calc(0.65 + (var(--atmosphere-luminance, 0.38) * 0.22));
+  animation-duration: 14s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apple-glass-card::before {
+    animation: none !important;
+  }
+}
+
+/* 3D Dynamic Magnetic Border-Gradient Animation & 1.5px Glowing Edge Light Reflection */
+@keyframes magneticBorderGlowPulse {
+  0%, 100% {
+    filter: brightness(1) drop-shadow(0 0 2px rgba(255, 255, 255, 0.25));
+    opacity: 0.88;
+  }
+  50% {
+    filter: brightness(1.45) drop-shadow(0 0 10px var(--mode-accent, rgba(255, 255, 255, 0.75)));
+    opacity: 1;
+  }
+}
+
+@keyframes magneticCardBoxGlowPulse {
+  0%, 100% {
+    box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.6), 
+                0 0 24px -2px var(--mode-accent, rgba(255, 255, 255, 0.35)),
+                inset 0 1px 2px rgba(255, 255, 255, 0.4),
+                inset 0 0 15px var(--mode-glow, rgba(255, 255, 255, 0.12));
+  }
+  50% {
+    box-shadow: 0 26px 56px -8px rgba(0, 0, 0, 0.68), 
+                0 0 40px 3px var(--mode-accent, rgba(255, 255, 255, 0.65)),
+                inset 0 1px 3px rgba(255, 255, 255, 0.65),
+                inset 0 0 24px var(--mode-glow, rgba(255, 255, 255, 0.26));
+  }
+}
+
+.apple-glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: radial-gradient(
+    280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.95) 0%,
+    var(--mode-accent, rgba(255, 255, 255, 0.85)) 22%,
+    var(--mode-glow, rgba(255, 255, 255, 0.25)) 48%,
+    transparent 78%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.apple-glass-card:hover {
+  border-color: transparent !important;
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.6), 
+              0 0 28px -2px var(--mode-accent, rgba(255, 255, 255, 0.35)),
+              inset 0 1px 2px rgba(255, 255, 255, 0.4),
+              inset 0 0 15px var(--mode-glow, rgba(255, 255, 255, 0.12)) !important;
+  transform: translateY(-2px) !important;
+  animation: magneticCardBoxGlowPulse 2.6s ease-in-out 1.5s infinite;
+}
+
+.apple-glass-card:hover::after {
+  opacity: 1;
+  animation: magneticBorderGlowPulse 2.6s ease-in-out 1.5s infinite;
+}
+
+/* Explicit Idle-pulse active state classes */
+.apple-glass-card.idle-pulse,
+.apple-glass-card[data-idle="true"] {
+  border-color: transparent !important;
+  animation: magneticCardBoxGlowPulse 2.6s ease-in-out infinite !important;
+}
+
+.apple-glass-card.idle-pulse::after,
+.apple-glass-card[data-idle="true"]::after {
+  opacity: 1 !important;
+  animation: magneticBorderGlowPulse 2.6s ease-in-out infinite !important;
+}
+
+.apple-glass-panel {
+  background: rgba(15, 23, 42, var(--glass-opacity, 0.45)) !important;
+  backdrop-filter: blur(var(--glass-blur, 24px)) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5) !important;
+  color: var(--mode-text-main, #ffffff);
+  position: relative;
+  z-index: 20;
+}
+
+.apple-glass-panel * {
+  color: #f8fafc;
+}
+
+/* Agent Topology Dynamic SVG Path Animations */
+@keyframes topologyDashFlow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+
+@keyframes topologyDashFlowReverse {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 32;
+  }
+}
+
+@keyframes topologyPulseGlow {
+  0%, 100% {
+    opacity: 0.45;
+    filter: drop-shadow(0 0 3px var(--topology-theme-color, rgba(245, 158, 11, 0.6)));
+  }
+  50% {
+    opacity: 0.95;
+    filter: drop-shadow(0 0 10px var(--topology-theme-color, rgba(251, 191, 36, 0.95)));
+  }
+}
+
+@keyframes topologySignalPing {
+  0% {
+    r: 3;
+    opacity: 1;
+    stroke-width: 2;
+  }
+  100% {
+    r: 22;
+    opacity: 0;
+    stroke-width: 0.5;
+  }
+}
+
+.topology-flowing-path {
+  stroke-dasharray: 6 8;
+  animation: topologyDashFlow 2.4s linear infinite, topologyPulseGlow 3s ease-in-out infinite;
+}
+
+.topology-flowing-path-reverse {
+  stroke-dasharray: 6 8;
+  animation: topologyDashFlowReverse 2.4s linear infinite, topologyPulseGlow 3s ease-in-out infinite;
+}
+
+.topology-active-pipeline-path {
+  stroke-dasharray: 8 6;
+  animation: topologyDashFlow 1.2s linear infinite, topologyPulseGlow 1.5s ease-in-out infinite;
+}
+
+.topology-signal-ring {
+  animation: topologySignalPing 2.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.apple-glass-panel h1, .apple-glass-panel h2, .apple-glass-panel h3, .apple-glass-panel h4 {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+@keyframes breathingGlow {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(56, 189, 248, 0.2), 0 0 10px rgba(168, 85, 247, 0.1);
+  }
+  50% {
+    box-shadow: 0 6px 22px rgba(56, 189, 248, 0.45), 0 0 20px rgba(168, 85, 247, 0.3);
+  }
+}
+
+.apple-glass-pill {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 0.5px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  animation: breathingGlow 4s ease-in-out infinite;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-glass-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.7), 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+  animation: none;
+}
+
+.apple-glass-button {
+  animation: breathingGlow 4s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease;
+}
+
+.apple-glass-button:hover, button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(56, 189, 248, 0.75), 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+  animation: none;
+}
+
+/* Inputs, Textareas, Selects - Unified Glass Tokens */
+input,
+textarea,
+select {
+  background-color: rgba(255, 255, 255, 0.09) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  font-weight: 500 !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 14px !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+  text-shadow: none !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(56, 189, 248, 0.8) !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4), 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
+  outline: none;
+}
+
+/* Force light card backgrounds to unified transparent frosted glass */
+.bg-\[\#FAF8F5\],
+.bg-\[\#FAF7F2\],
+.bg-\[\#FCFAF7\],
+.bg-\[\#FDFBF7\],
+.bg-\[\#FAF9F6\],
+.bg-white {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.bg-\[\#FAF8F5\] *,
+.bg-\[\#FAF7F2\] *,
+.bg-\[\#FCFAF7\] *,
+.bg-\[\#FDFBF7\] *,
+.bg-\[\#FAF9F6\] *,
+.bg-white * {
+  color: #f8fafc !important;
+}
+
+.bg-\[\#E6E2DA\],
+.bg-\[\#E4E0D8\],
+.bg-\[\#EFECE6\],
+.bg-\[\#F2EFE9\],
+.bg-\[\#DDD8D0\],
+.bg-\[\#D8D3C9\],
+.bg-\[\#F5F2EE\] {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* 3D Card flip utilities for Flashcards */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Print-ready PDF export media styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable-journal-card, .printable-journal-card * {
+    visibility: visible;
+  }
+  .printable-journal-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 24px !important;
+    margin: 0 !important;
+  }
+}
+
+/* Clean Component-Level Isolated Glassmorphism Classes (Safe & Optimized) */
+.glass-card, .glass-pill, .apple-glass, .apple-glass-card, .apple-glass-coffee {
+  background: rgba(15, 23, 42, var(--glass-opacity, 0.25)) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4) !important;
+  color: #ffffff !important;
+  
+  /* Hardware Acceleration & GPU Optimization */
+  will-change: backdrop-filter, transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Modal Overlay Backdrop: Ensure dimming and blur over the dynamic cinematic backgrounds without style corruption */
+.fixed.inset-0.z-50, 
+.fixed.inset-0.z-60 {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Modal Content Card Isolation: Clean, high-contrast, robust modal backgrounds */
+.fixed.inset-0.z-50 > div,
+.fixed.inset-0.z-60 > div,
+.fixed.inset-0.z-50 [class*="max-w-"],
+.fixed.inset-0.z-60 [class*="max-w-"] {
+  background: rgba(15, 23, 42, 0.95) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 1.5rem !important;
+}
+
+/* Solid Notification & Toast Classes (Safe from high-transparency washouts) */
+.hydration-toast, .health-toast, .notification-box, [class*="toast"] {
+  background: rgba(15, 23, 42, 0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45) !important;
+  color: #ffffff !important;
+  
+  /* Hardware Acceleration */
+  will-change: backdrop-filter, transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Balanced Frosted Glass Standard & Enhanced Legibility */
+.dark-glass-panel, .apple-glass, [class*="apple-glass"], .dark-glass-card {
+  background: rgba(15, 23, 42, 0.48) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--mode-border-accent, rgba(255, 255, 255, 0.18)) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 0 20px var(--mode-glow, transparent), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.45) !important;
+  color: var(--mode-text-main, #ffffff) !important;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+  transition: background 0.7s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.7s cubic-bezier(0.4, 0, 0.2, 1), color 0.7s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global 3D Interactive Mouse Light Spotlight */
+.global-cursor-3d-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 580px;
+  height: 580px;
+  margin-top: -290px;
+  margin-left: -290px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--mode-accent-glow, rgba(56, 189, 248, 0.18)) 0%,
+    rgba(255, 255, 255, 0.05) 30%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 6;
+  mix-blend-mode: screen;
+  transform: translate3d(var(--global-mouse-x, -1000px), var(--global-mouse-y, -1000px), 0);
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
+.mode-text-primary {
+  color: var(--mode-text-main, #ffffff) !important;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7), 0 0 15px var(--mode-accent-glow, transparent) !important;
+  transition: color 0.7s cubic-bezier(0.4, 0, 0.2, 1), text-shadow 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mode-text-secondary {
+  color: var(--mode-text-muted, #cbd5e1) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
+  transition: color 0.7s cubic-bezier(0.4, 0, 0.2, 1), text-shadow 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.mode-glow-shadow {
+  box-shadow: 0 0 25px var(--mode-glow), 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+}
+
+.mode-border-active {
+  border-color: var(--mode-border-accent) !important;
+  box-shadow: 0 0 15px var(--mode-glow) !important;
+}
+
+.mode-accent-text {
+  color: var(--mode-accent) !important;
+}
+
+/* Dynamic Interactive Color Font System */
+.dynamic-font-main {
+  color: var(--mode-text-main, #ffffff) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.dynamic-font-muted {
+  color: var(--mode-text-muted, #cbd5e1) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.dynamic-font-accent {
+  color: var(--mode-accent, #38bdf8) !important;
+  text-shadow: 0 0 12px var(--mode-accent-glow, rgba(56, 189, 248, 0.4)) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Interactive Dynamic Font that shifts and shines on hover */
+.dynamic-font-interactive {
+  color: var(--mode-text-main, #ffffff) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer;
+}
+
+.dynamic-font-interactive:hover {
+  color: var(--mode-accent, #38bdf8) !important;
+  text-shadow: 0 0 16px var(--mode-accent-glow, rgba(56, 189, 248, 0.6)), 0 1px 4px rgba(0, 0, 0, 0.9) !important;
+  transform: translateY(-1px);
+}
+
+/* Dynamic Luminous Gradient Text */
+.dynamic-gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, var(--mode-accent, #38bdf8) 50%, #c084fc 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: 0 0 20px var(--mode-accent-glow, rgba(56, 189, 248, 0.3)) !important;
+}
+
+/* Force override all legacy dark brown and mud font colors across the entire website */
+.text-\[\#2C1D11\], 
+.text-\[\#3B332B\], 
+.text-\[\#2E2721\], 
+.text-\[\#1C1917\], 
+.text-\[\#1E140C\], 
+.text-\[\#3D2C1E\], 
+.text-\[\#3D3328\], 
+.text-\[\#4A3E31\], 
+.text-\[\#4A4238\],
+.text-\[\#5A3E2D\], 
+.text-\[\#2A241E\],
+.text-\[\#2C2620\],
+.text-stone-900, 
+.text-stone-950,
+.text-amber-950 {
+  color: var(--mode-text-main, #ffffff) !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75) !important;
+  transition: color 0.3s ease, text-shadow 0.3s ease !important;
+}
+
+.text-\[\#7B583E\], 
+.text-\[\#786F62\], 
+.text-\[\#8C8275\], 
+.text-\[\#6A6054\], 
+.text-\[\#5A5044\], 
+.text-\[\#6B5E51\],
+.text-\[\#6B7A6E\],
+.text-\[\#A27B5C\],
+.text-\[\#8B6547\],
+.text-amber-900,
+.text-amber-800,
+.text-stone-600, 
+.text-stone-700 {
+  color: var(--mode-text-muted, #cbd5e1) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+  transition: color 0.3s ease, text-shadow 0.3s ease !important;
+}
+
+/* Dynamic Interactive Hover States for Replaced Brown Classes */
+button.text-\[\#2C1D11\]:hover,
+button.text-\[\#3B332B\]:hover,
+button.text-\[\#7B583E\]:hover,
+a.text-\[\#2C1D11\]:hover,
+a.text-\[\#3B332B\]:hover,
+a.text-\[\#7B583E\]:hover,
+.cursor-pointer.text-\[\#2C1D11\]:hover,
+.cursor-pointer.text-\[\#3B332B\]:hover,
+.cursor-pointer.text-\[\#7B583E\]:hover {
+  color: var(--mode-accent, #38bdf8) !important;
+  text-shadow: 0 0 14px var(--mode-accent-glow, rgba(56, 189, 248, 0.5)) !important;
+}
+
+/* Force override stubborn backgrounds to adopt dynamic glass */
+.bg-\[\#FAF8F5\], .bg-\[\#FAF7F2\], .bg-\[\#EFECE6\], .bg-\[\#E6E2DA\], .bg-\[\#F2EFE9\], .bg-\[\#F4EFE6\], .bg-white, [class*="bg-[#FAF"] {
+  background: rgba(15, 23, 42, var(--glass-opacity, 0.48)) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  color: var(--mode-text-main, #ffffff) !important;
+  border-color: var(--mode-border-accent, rgba(255, 255, 255, 0.18)) !important;
+}
+
+.mode-badge {
+  background: var(--mode-badge-bg) !important;
+  border: 1px solid var(--mode-border-accent) !important;
+  color: var(--mode-text-tint) !important;
+}
+
+/* Visual Breathing Pacer Animation for 4-7-8 Rhythm (19s cycle) */
+@keyframes breathing-478-pacer {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+  }
+  21.05% { /* 4s Inhale */
+    transform: scale(1.42);
+    box-shadow: 0 0 50px rgba(52, 211, 153, 0.6);
+  }
+  57.89% { /* 7s Hold (4s + 7s = 11s) */
+    transform: scale(1.38);
+    box-shadow: 0 0 45px rgba(52, 211, 153, 0.5);
+  }
+  100% { /* 8s Exhale (11s + 8s = 19s) */
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
+  }
+}
+
+@keyframes breathing-478-aura {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  21.05%, 57.89% {
+    transform: scale(1.25);
+    opacity: 0.7;
+  }
+}
+
+.breathing-pacer-animated {
+  animation: breathing-478-pacer 19s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.breathing-aura-animated {
+  animation: breathing-478-aura 19s ease-in-out infinite;
+}
+
+/* Eliminate solid white / opaque filter pills and ghost elements */
+button.bg-white, div.bg-white, span.bg-white, .bg-white\/80, .bg-white\/90, .bg-slate-100, .bg-slate-200, .bg-zinc-100, .bg-zinc-200, .bg-gray-100, .bg-gray-200 {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Apple Glass Step Navigation Bar */
+.apple-glass-step-nav {
+  background: rgba(15, 23, 42, 0.3) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 16px !important;
+}
+
+.apple-step-pill-active {
+  background: var(--mode-badge-bg, rgba(56, 189, 248, 0.25)) !important;
+  border: 1px solid var(--mode-border-accent, rgba(56, 189, 248, 0.6)) !important;
+  box-shadow: 0 0 14px var(--mode-glow, rgba(56, 189, 248, 0.45)), inset 0 1px 2px rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+
+.apple-step-pill-inactive {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7) !important;
+}
+
+.apple-step-pill-inactive:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================================
+   ADVANCED FLOATING GLASSMORPHISM & WATER-EFFECT UI SUITE
+   ========================================================================= */
+
+/* Core High-End Glassmorphism Card Base Styling */
+.apple-glass-card,
+.glass-card,
+.apple-glass,
+.apple-glass-panel,
+.dark-glass-panel,
+.dark-glass-card {
+  background: rgba(15, 23, 42, 0.25) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Water-Floating Animation Keyframe */
+@keyframes floatOnWater {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.4deg);
+  }
+}
+
+@keyframes calmWaterFloating {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.4deg);
+  }
+}
+
+/* Water Reflection Pulse Animation Keyframe */
+@keyframes waterReflectionPulse {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+    filter: blur(14px) drop-shadow(0 10px 25px rgba(0, 240, 255, 0.25));
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+    filter: blur(22px) drop-shadow(0 16px 35px rgba(0, 240, 255, 0.6));
+  }
+}
+
+/* Apply Smooth Floating Motion to Cards & Navigation Bars */
+.float-on-water,
+.water-float-animation,
+.apple-glass-card {
+  animation: floatOnWater 6s ease-in-out infinite;
+}
+
+/* Neon Water Light Reflections Pseudo-Elements ::after */
+.water-reflection-glow,
+.apple-glass-card {
+  position: relative;
+}
+
+.water-reflection-glow::after,
+.apple-glass-card::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 5%;
+  width: 90%;
+  height: 16px;
+  background: radial-gradient(ellipse at center, rgba(0, 240, 255, 0.35) 0%, rgba(56, 189, 248, 0.15) 50%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(14px);
+  animation: waterReflectionPulse 5s ease-in-out infinite;
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+}
+
+/* Interactive Focus Mode Floating State */
+.focused,
+.apple-glass-card:focus-within,
+.apple-glass-card.focused {
+  transform: scale(1.03) translateY(-10px) !important;
+  z-index: 30 !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 45px rgba(0, 240, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  border-color: rgba(0, 240, 255, 0.6) !important;
+  animation-play-state: paused !important;
+}
+
+.focused::after,
+.apple-glass-card:focus-within::after,
+.apple-glass-card.focused::after {
+  opacity: 1 !important;
+  transform: scale(1.15) !important;
+  filter: blur(22px) drop-shadow(0 20px 45px rgba(0, 240, 255, 0.85)) !important;
+}
+
+/* Background cards recede into depth when focus mode is active */
+.body-focus-mode .apple-glass-card:not(.focused):not(:focus-within),
+.body-focus-mode .glass-card:not(.focused):not(:focus-within),
+.body-focus-mode .glass-panel:not(.focused):not(:focus-within) {
+  opacity: 0.35 !important;
+  filter: blur(8px) grayscale(30%) !important;
+  transform: scale(0.95) translateZ(-40px) !important;
+  pointer-events: none !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* =========================================================================
+   DYNAMIC VIBE-BASED FLOATING ANIMATIONS SUITE (BESPOKE PER THEME MODE)
+   ========================================================================= */
+
+/* Generic Fallbacks */
+.vibe-float-cosmic { animation: float-cosmic 8s ease-in-out infinite !important; }
+.vibe-float-water { animation: stormWave 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite !important; }
+.vibe-float-nature { animation: float-nature 6.5s ease-in-out infinite !important; }
+.vibe-float-cozy { animation: float-cozy 7s ease-in-out infinite !important; }
+
+/* Base Glassmorphism Setup for all Vibe Floating Elements */
+[class*="vibe-float-"] {
+  background: rgba(15, 23, 42, 0.25) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  position: relative;
+}
+
+[class*="vibe-float-"]::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 5%;
+  width: 90%;
+  height: 16px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* --- 1. RAINY CAFE --- */
+@keyframes float-rainy {
+  0%, 100% { transform: translateY(0px) rotate(0deg); box-shadow: 0 20px 40px rgba(0,0,0,0.65), 0 0 25px rgba(56, 189, 248, 0.35) !important; }
+  50% { transform: translateY(-7px) rotate(0.4deg); box-shadow: 0 26px 50px rgba(0,0,0,0.75), 0 0 38px rgba(56, 189, 248, 0.6) !important; }
+}
+.vibe-float-rainy { animation: float-rainy 4.8s ease-in-out infinite !important; border-color: rgba(56, 189, 248, 0.35) !important; }
+.vibe-float-rainy::after { background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.55) 0%, rgba(14, 165, 233, 0.2) 50%, transparent 70%); animation: reflection-pulse-water 4.5s ease-in-out infinite !important; }
+
+/* --- 2. STORMY NIGHT --- */
+@keyframes stormWave {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  25% { transform: translateY(-9px) translateX(3px) rotate(1.2deg); }
+  50% { transform: translateY(-4px) translateX(-4px) rotate(-1.5deg); }
+  75% { transform: translateY(-11px) translateX(2px) rotate(1.8deg); }
+}
+.vibe-float-stormy, .mode-stormy-water { animation: stormWave 3.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite !important; border-color: rgba(0, 240, 255, 0.45) !important; }
+.vibe-float-stormy::after, .mode-stormy-water::after { background: radial-gradient(ellipse at center, rgba(0, 240, 255, 0.65) 0%, rgba(56, 189, 248, 0.25) 50%, transparent 70%); animation: reflection-pulse-stormy 2.6s ease-in-out infinite !important; }
+
+/* --- 3. PURE FOCUS (16-Sec Zen Box Breathing) --- */
+@keyframes float-focus {
+  0%, 100% { transform: translateY(0px) scale(1); box-shadow: 0 20px 40px rgba(0,0,0,0.65), 0 0 20px rgba(196, 154, 108, 0.25) !important; }
+  50% { transform: translateY(-4px) scale(1.025); box-shadow: 0 28px 55px rgba(0,0,0,0.8), 0 0 40px rgba(221, 184, 146, 0.55) !important; }
+}
+.vibe-float-focus { animation: float-focus 16s ease-in-out infinite !important; border-color: rgba(221, 184, 146, 0.4) !important; }
+.vibe-float-focus::after { background: radial-gradient(ellipse at center, rgba(221, 184, 146, 0.5) 0%, rgba(196, 154, 108, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 8s ease-in-out infinite !important; }
+
+/* --- 4. PLAYFUL VIBE (Sunny Flower Bento) --- */
+@keyframes float-fun {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  30% { transform: translateY(-9px) rotate(1.5deg) scale(1.03); }
+  70% { transform: translateY(-3px) rotate(-1.2deg) scale(0.99); }
+}
+.vibe-float-fun { animation: float-fun 3.2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite !important; border-color: rgba(251, 191, 36, 0.5) !important; }
+.vibe-float-fun::after { background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.6) 0%, rgba(245, 158, 11, 0.25) 50%, transparent 70%); animation: reflection-pulse-cozy 3.2s ease-in-out infinite !important; }
+
+/* --- 5. ZEN GARDEN --- */
+@keyframes float-zen {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-0.5deg); }
+}
+.vibe-float-zen { animation: float-zen 6.5s ease-in-out infinite !important; border-color: rgba(244, 63, 94, 0.35) !important; }
+.vibe-float-zen::after { background: radial-gradient(ellipse at center, rgba(244, 63, 94, 0.45) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 70%); animation: reflection-pulse-nature 6.5s ease-in-out infinite !important; }
+
+/* --- 6. NEON CITY / CYBERPUNK --- */
+@keyframes float-cyberpunk {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  45% { transform: translateY(-8px) scale(1.01); }
+  50% { transform: translateY(-7px) scale(1.015) rotate(0.6deg); }
+  55% { transform: translateY(-8px) scale(1.01); }
+}
+.vibe-float-cyberpunk { animation: float-cyberpunk 3.8s ease-in-out infinite !important; border-color: rgba(236, 72, 153, 0.45) !important; }
+.vibe-float-cyberpunk::after { background: radial-gradient(ellipse at center, rgba(236, 72, 153, 0.6) 0%, rgba(6, 182, 212, 0.3) 50%, transparent 70%); animation: reflection-pulse-stormy 3.5s ease-in-out infinite !important; }
+
+/* --- 7. COSMIC VOID --- */
+@keyframes float-space {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-12px) rotate(-0.8deg) scale(1.015); }
+}
+.vibe-float-space { animation: float-space 9s ease-in-out infinite !important; border-color: rgba(168, 85, 247, 0.4) !important; }
+.vibe-float-space::after { background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.55) 0%, rgba(56, 189, 248, 0.2) 50%, transparent 70%); animation: reflection-pulse-cosmic 7.5s ease-in-out infinite !important; }
+
+/* --- 8. COZY LIBRARY --- */
+@keyframes float-library {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(0.3deg); }
+}
+.vibe-float-library { animation: float-library 7.2s ease-in-out infinite !important; border-color: rgba(180, 83, 9, 0.35) !important; }
+.vibe-float-library::after { background: radial-gradient(ellipse at center, rgba(180, 83, 9, 0.5) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 7s ease-in-out infinite !important; }
+
+/* --- 9. OCEAN TIDE --- */
+@keyframes float-ocean {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(-0.7deg); }
+}
+.vibe-float-ocean { animation: float-ocean 5.8s ease-in-out infinite !important; border-color: rgba(2, 132, 199, 0.4) !important; }
+.vibe-float-ocean::after { background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.6) 0%, rgba(56, 189, 248, 0.25) 50%, transparent 70%); animation: reflection-pulse-water 5.5s ease-in-out infinite !important; }
+
+/* --- 10. AUTUMN CAFE --- */
+@keyframes float-autumn {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(0.8deg); }
+}
+.vibe-float-autumn { animation: float-autumn 6.2s ease-in-out infinite !important; border-color: rgba(217, 119, 6, 0.4) !important; }
+.vibe-float-autumn::after { background: radial-gradient(ellipse at center, rgba(217, 119, 6, 0.55) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 6s ease-in-out infinite !important; }
+
+/* --- 11. EXPRESS TRAIN --- */
+@keyframes float-train {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-3px) translateX(1px); }
+  50% { transform: translateY(-5px) translateX(-1px); }
+  75% { transform: translateY(-2px) translateX(0.5px); }
+}
+.vibe-float-train { animation: float-train 3.5s ease-in-out infinite !important; border-color: rgba(100, 116, 139, 0.4) !important; }
+.vibe-float-train::after { background: radial-gradient(ellipse at center, rgba(100, 116, 139, 0.5) 0%, rgba(148, 163, 184, 0.2) 50%, transparent 70%); animation: reflection-pulse-water 3.5s ease-in-out infinite !important; }
+
+/* --- 12. LATE NIGHT TRAIN --- */
+@keyframes float-late_night_train {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(-0.5deg); }
+}
+.vibe-float-late_night_train { animation: float-late_night_train 4.2s ease-in-out infinite !important; border-color: rgba(245, 158, 11, 0.35) !important; }
+.vibe-float-late_night_train::after { background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.5) 0%, rgba(30, 41, 59, 0.3) 50%, transparent 70%); animation: reflection-pulse-cozy 4.2s ease-in-out infinite !important; }
+
+/* --- 13. COZY FIREPLACE LO-FI --- */
+@keyframes float-cozy_fireplace_lofi {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-6px) scale(1.01); }
+}
+.vibe-float-cozy_fireplace_lofi { animation: float-cozy_fireplace_lofi 5s ease-in-out infinite !important; border-color: rgba(234, 88, 12, 0.45) !important; }
+.vibe-float-cozy_fireplace_lofi::after { background: radial-gradient(ellipse at center, rgba(234, 88, 12, 0.6) 0%, rgba(245, 158, 11, 0.25) 50%, transparent 70%); animation: reflection-pulse-cozy 4.8s ease-in-out infinite !important; }
+
+/* --- 14. DEEP SPACE OBSERVATORY --- */
+@keyframes float-deep_space_observatory {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-11px) rotate(0.6deg) scale(1.012); }
+}
+.vibe-float-deep_space_observatory { animation: float-deep_space_observatory 8.5s ease-in-out infinite !important; border-color: rgba(147, 51, 234, 0.4) !important; }
+.vibe-float-deep_space_observatory::after { background: radial-gradient(ellipse at center, rgba(147, 51, 234, 0.55) 0%, rgba(6, 182, 212, 0.25) 50%, transparent 70%); animation: reflection-pulse-cosmic 7s ease-in-out infinite !important; }
+
+/* --- 15. VINTAGE VINYL JAZZ --- */
+@keyframes float-vintage_vinyl_jazz {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-0.6deg); }
+}
+.vibe-float-vintage_vinyl_jazz { animation: float-vintage_vinyl_jazz 4.5s ease-in-out infinite !important; border-color: rgba(217, 119, 6, 0.4) !important; }
+.vibe-float-vintage_vinyl_jazz::after { background: radial-gradient(ellipse at center, rgba(217, 119, 6, 0.55) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 4.5s ease-in-out infinite !important; }
+
+/* --- 16. STARLIT DESERT NIGHT --- */
+@keyframes float-starlit_desert_night {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.4deg); }
+}
+.vibe-float-starlit_desert_night { animation: float-starlit_desert_night 7s ease-in-out infinite !important; border-color: rgba(59, 130, 246, 0.4) !important; }
+.vibe-float-starlit_desert_night::after { background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.5) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 70%); animation: reflection-pulse-cosmic 6.5s ease-in-out infinite !important; }
+
+/* --- 17. RAINFOREST --- */
+@keyframes float-rainforest {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(-0.5deg); }
+}
+.vibe-float-rainforest { animation: float-rainforest 5.2s ease-in-out infinite !important; border-color: rgba(16, 185, 129, 0.4) !important; }
+.vibe-float-rainforest::after { background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.55) 0%, rgba(52, 211, 153, 0.25) 50%, transparent 70%); animation: reflection-pulse-nature 5s ease-in-out infinite !important; }
+
+/* --- 18. BLIZZARD / ALPINE CABIN --- */
+@keyframes float-blizzard {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-6px) rotate(1deg); }
+  66% { transform: translateY(-3px) rotate(-0.8deg); }
+}
+.vibe-float-blizzard { animation: float-blizzard 3.8s ease-in-out infinite !important; border-color: rgba(56, 189, 248, 0.45) !important; }
+.vibe-float-blizzard::after { background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.6) 0%, rgba(255, 255, 255, 0.3) 50%, transparent 70%); animation: reflection-pulse-water 3.5s ease-in-out infinite !important; }
+
+/* --- 19. WIZARD SANCTUM --- */
+@keyframes float-wizard {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-9px) rotate(-0.7deg) scale(1.01); }
+}
+.vibe-float-wizard { animation: float-wizard 6s ease-in-out infinite !important; border-color: rgba(139, 92, 246, 0.45) !important; }
+.vibe-float-wizard::after { background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.6) 0%, rgba(192, 132, 252, 0.25) 50%, transparent 70%); animation: reflection-pulse-cosmic 5.5s ease-in-out infinite !important; }
+
+/* --- 20. DESERT CAMP --- */
+@keyframes float-desert {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(0.4deg); }
+}
+.vibe-float-desert { animation: float-desert 6.8s ease-in-out infinite !important; border-color: rgba(245, 158, 11, 0.4) !important; }
+.vibe-float-desert::after { background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.55) 0%, rgba(217, 119, 6, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 6.5s ease-in-out infinite !important; }
+
+/* --- 21. VINYL LOUNGE --- */
+@keyframes float-vinyl {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-0.4deg); }
+}
+.vibe-float-vinyl { animation: float-vinyl 4.6s ease-in-out infinite !important; border-color: rgba(249, 115, 22, 0.4) !important; }
+.vibe-float-vinyl::after { background: radial-gradient(ellipse at center, rgba(249, 115, 22, 0.55) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 4.6s ease-in-out infinite !important; }
+
+/* --- 22. HOGWARTS COURTYARD --- */
+@keyframes float-hogwarts {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(0.5deg); }
+}
+.vibe-float-hogwarts { animation: float-hogwarts 5.5s ease-in-out infinite !important; border-color: rgba(5, 150, 105, 0.4) !important; }
+.vibe-float-hogwarts::after { background: radial-gradient(ellipse at center, rgba(5, 150, 105, 0.55) 0%, rgba(245, 158, 11, 0.25) 50%, transparent 70%); animation: reflection-pulse-nature 5.2s ease-in-out infinite !important; }
+
+/* --- 23. BAMBOO FOREST --- */
+@keyframes float-bamboo {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-0.3deg); }
+}
+.vibe-float-bamboo { animation: float-bamboo 6.4s ease-in-out infinite !important; border-color: rgba(34, 197, 94, 0.4) !important; }
+.vibe-float-bamboo::after { background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.5) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 70%); animation: reflection-pulse-nature 6s ease-in-out infinite !important; }
+
+/* --- 24. CODING LAB --- */
+@keyframes float-coding {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-6px) scale(1.008); }
+}
+.vibe-float-coding { animation: float-coding 4s ease-in-out infinite !important; border-color: rgba(16, 185, 129, 0.45) !important; }
+.vibe-float-coding::after { background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.6) 0%, rgba(6, 182, 212, 0.25) 50%, transparent 70%); animation: reflection-pulse-nature 4s ease-in-out infinite !important; }
+
+/* --- 25. GREENHOUSE --- */
+@keyframes float-greenhouse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(0.4deg); }
+}
+.vibe-float-greenhouse { animation: float-greenhouse 5.6s ease-in-out infinite !important; border-color: rgba(52, 211, 153, 0.4) !important; }
+.vibe-float-greenhouse::after { background: radial-gradient(ellipse at center, rgba(52, 211, 153, 0.5) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 70%); animation: reflection-pulse-nature 5.5s ease-in-out infinite !important; }
+
+/* --- 26. TOKYO SNOW --- */
+@keyframes float-tokyo_snow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(-0.5deg); }
+}
+.vibe-float-tokyo_snow { animation: float-tokyo_snow 5.2s ease-in-out infinite !important; border-color: rgba(129, 140, 248, 0.4) !important; }
+.vibe-float-tokyo_snow::after { background: radial-gradient(ellipse at center, rgba(129, 140, 248, 0.55) 0%, rgba(224, 231, 255, 0.25) 50%, transparent 70%); animation: reflection-pulse-water 5s ease-in-out infinite !important; }
+
+/* --- 27. MOUNTAIN WATERFALL --- */
+@keyframes float-waterfall {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.6deg); }
+}
+.vibe-float-waterfall { animation: float-waterfall 4s ease-in-out infinite !important; border-color: rgba(6, 182, 212, 0.45) !important; }
+.vibe-float-waterfall::after { background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.6) 0%, rgba(56, 189, 248, 0.25) 50%, transparent 70%); animation: reflection-pulse-water 3.8s ease-in-out infinite !important; }
+
+/* --- 28. BOOKSTORE ATTIC --- */
+@keyframes float-bookstore {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-0.3deg); }
+}
+.vibe-float-bookstore { animation: float-bookstore 6.6s ease-in-out infinite !important; border-color: rgba(245, 158, 11, 0.38) !important; }
+.vibe-float-bookstore::after { background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.5) 0%, rgba(217, 119, 6, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 6.2s ease-in-out infinite !important; }
+
+/* --- 29. AURORA ARCTIC --- */
+@keyframes float-aurora {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-10px) rotate(0.7deg) scale(1.01); }
+}
+.vibe-float-aurora { animation: float-aurora 7.5s ease-in-out infinite !important; border-color: rgba(16, 185, 129, 0.45) !important; }
+.vibe-float-aurora::after { background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.55) 0%, rgba(168, 85, 247, 0.3) 50%, transparent 70%); animation: reflection-pulse-cosmic 6.8s ease-in-out infinite !important; }
+
+/* --- 30. STARLIT DESERT / OBSERVATORY --- */
+@keyframes float-starlit_desert {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-9px) rotate(-0.6deg); }
+}
+.vibe-float-starlit_desert { animation: float-starlit_desert 8s ease-in-out infinite !important; border-color: rgba(6, 182, 212, 0.4) !important; }
+.vibe-float-starlit_desert::after { background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.5) 0%, rgba(59, 130, 246, 0.2) 50%, transparent 70%); animation: reflection-pulse-cosmic 7.2s ease-in-out infinite !important; }
+
+/* --- 31. MIDNIGHT DOME --- */
+@keyframes float-midnight_dome {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-11px) rotate(0.5deg) scale(1.01); }
+}
+.vibe-float-midnight_dome { animation: float-midnight_dome 8.8s ease-in-out infinite !important; border-color: rgba(59, 130, 246, 0.4) !important; }
+.vibe-float-midnight_dome::after { background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.55) 0%, rgba(6, 182, 212, 0.2) 50%, transparent 70%); animation: reflection-pulse-cosmic 8s ease-in-out infinite !important; }
+
+/* --- 32. PARISIAN BALCONY --- */
+@keyframes float-paris_balcony {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-0.4deg); }
+}
+.vibe-float-paris_balcony { animation: float-paris_balcony 5.4s ease-in-out infinite !important; border-color: rgba(168, 85, 247, 0.38) !important; }
+.vibe-float-paris_balcony::after { background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.5) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 5.2s ease-in-out infinite !important; }
+
+/* --- 33. DEEP SEA SANCTUARY --- */
+@keyframes float-deep_sea {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
+}
+.vibe-float-deep_sea { animation: float-deep_sea 6.2s ease-in-out infinite !important; border-color: rgba(2, 132, 199, 0.45) !important; }
+.vibe-float-deep_sea::after { background: radial-gradient(ellipse at center, rgba(2, 132, 199, 0.6) 0%, rgba(6, 182, 212, 0.25) 50%, transparent 70%); animation: reflection-pulse-water 6s ease-in-out infinite !important; }
+
+/* --- 34. EGYPTIAN TEMPLE --- */
+@keyframes float-egyptian_temple {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(0.4deg); }
+}
+.vibe-float-egyptian_temple { animation: float-egyptian_temple 6.8s ease-in-out infinite !important; border-color: rgba(234, 179, 8, 0.42) !important; }
+.vibe-float-egyptian_temple::after { background: radial-gradient(ellipse at center, rgba(234, 179, 8, 0.55) 0%, rgba(217, 119, 6, 0.2) 50%, transparent 70%); animation: reflection-pulse-cozy 6.5s ease-in-out infinite !important; }
+
+/* --- 35. CYBERPUNK LOFT --- */
+@keyframes float-cyberpunk_loft {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-7px) scale(1.012); }
+}
+.vibe-float-cyberpunk_loft { animation: float-cyberpunk_loft 3.9s ease-in-out infinite !important; border-color: rgba(244, 63, 94, 0.45) !important; }
+.vibe-float-cyberpunk_loft::after { background: radial-gradient(ellipse at center, rgba(244, 63, 94, 0.6) 0%, rgba(6, 182, 212, 0.25) 50%, transparent 70%); animation: reflection-pulse-stormy 3.6s ease-in-out infinite !important; }
+
+/* --- 36. WHISPERING PINE --- */
+@keyframes float-whispering_pine {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-0.3deg); }
+}
+.vibe-float-whispering_pine { animation: float-whispering_pine 6s ease-in-out infinite !important; border-color: rgba(21, 128, 61, 0.42) !important; }
+.vibe-float-whispering_pine::after { background: radial-gradient(ellipse at center, rgba(21, 128, 61, 0.55) 0%, rgba(34, 197, 94, 0.2) 50%, transparent 70%); animation: reflection-pulse-nature 5.8s ease-in-out infinite !important; }
+
+/* --- 37. VICTORIAN STORM --- */
+@keyframes float-victorian_storm {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  25% { transform: translateY(-8px) translateX(2px) rotate(1deg); }
+  50% { transform: translateY(-4px) translateX(-3px) rotate(-1.2deg); }
+  75% { transform: translateY(-10px) translateX(1px) rotate(1.4deg); }
+}
+.vibe-float-victorian_storm { animation: float-victorian_storm 3.4s ease-in-out infinite !important; border-color: rgba(139, 92, 246, 0.45) !important; }
+.vibe-float-victorian_storm::after { background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.6) 0%, rgba(56, 189, 248, 0.25) 50%, transparent 70%); animation: reflection-pulse-stormy 2.8s ease-in-out infinite !important; }
+
+/* --- 38. ZEN STONE GARDEN --- */
+@keyframes float-zen_stone {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(0.3deg); }
+}
+.vibe-float-zen_stone { animation: float-zen_stone 5.8s ease-in-out infinite !important; border-color: rgba(8, 145, 178, 0.4) !important; }
+.vibe-float-zen_stone::after { background: radial-gradient(ellipse at center, rgba(8, 145, 178, 0.5) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 70%); animation: reflection-pulse-nature 5.5s ease-in-out infinite !important; }
+
+/* --- 39. LUNAR BASE --- */
+@keyframes float-lunar_base {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-13px) rotate(-0.9deg) scale(1.018); }
+}
+.vibe-float-lunar_base { animation: float-lunar_base 10s ease-in-out infinite !important; border-color: rgba(6, 182, 212, 0.4) !important; }
+.vibe-float-lunar_base::after { background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.55) 0%, rgba(224, 231, 255, 0.25) 50%, transparent 70%); animation: reflection-pulse-cosmic 8.5s ease-in-out infinite !important; }
+
+/* =========================================================================
+   MOBILE VIEWPORT-RELATIVE GRID & TYPOGRAPHY ADJUSTMENTS (< 640px)
+   ========================================================================= */
+@media (max-width: 639.98px) {
+  /* Viewport-relative padding reduction for cards and glass panels */
+  .apple-glass-card,
+  .apple-glass,
+  .apple-glass-panel,
+  .kanban-column,
+  .priority-matrix-card {
+    padding: clamp(0.65rem, 2.8vw, 0.85rem) !important;
+    border-radius: 14px !important;
+  }
+
+  /* Viewport-relative font size reductions for balanced mobile typography */
+  h1 {
+    font-size: clamp(1.2rem, 5vw, 1.45rem) !important;
+    line-height: 1.25 !important;
+  }
+  h2 {
+    font-size: clamp(1.02rem, 4vw, 1.18rem) !important;
+    line-height: 1.3 !important;
+  }
+  h3 {
+    font-size: clamp(0.92rem, 3.5vw, 1.02rem) !important;
+    line-height: 1.35 !important;
+  }
+  h4, h5, h6 {
+    font-size: clamp(0.82rem, 3vw, 0.92rem) !important;
+    line-height: 1.38 !important;
+  }
+
+  /* Reduced metric number displays on narrow mobile screens */
+  .text-2xl, .text-3xl {
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Force main dashboard grid to a single-column stack */
+  .dashboard-main-grid,
+  .dashboard-overview-container .grid,
+  .dashboard-grid-stack,
+  #dashboard-main-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Full-width stretch for child items within stacked dashboard grid */
+  .dashboard-main-grid > *,
+  #dashboard-main-grid > * {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Mobile compact button horizontal padding */
+  .dashboard-overview-container button {
+    padding-left: clamp(0.65rem, 2vw, 0.85rem);
+    padding-right: clamp(0.65rem, 2vw, 0.85rem);
+  }
+}
+
+/* =========================================================================
+   UNIVERSAL CARD FLOATING PHYSICS & NEON WATER REFLECTION SUITE
+   Applies Apple Glassmorphism + unique staggered floating water physics to ALL cards
+   ========================================================================= */
+
+/* Base Apple Glassmorphism & Water Reflection for ALL Card Components */
+.apple-glass-card,
+.glass-panel,
+.apple-glass-panel,
+.kanban-column,
+.priority-matrix-card,
+.widget-card,
+.cozy-card,
+.dashboard-card,
+.stat-card,
+.study-card,
+.sanctuary-card,
+.profile-card,
+.zenith-card {
+  position: relative !important;
+  background: rgba(15, 23, 42, 0.35) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #ffffff !important;
+  box-shadow: 0 calc(8px + 14px * var(--cinematic-depth, 1)) calc(16px + 24px * var(--cinematic-depth, 1)) rgba(0, 0, 0, calc(0.35 + 0.15 * var(--cinematic-depth, 1))), 0 0 calc(20px * var(--cinematic-depth, 1)) rgba(0, 240, 255, calc(0.12 * var(--cinematic-depth, 1))), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transform-style: preserve-3d !important;
+  will-change: transform, box-shadow !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease !important;
+}
+
+/* Dynamic Under-Card Neon Water Light Reflections */
+.apple-glass-card::after,
+.glass-panel::after,
+.apple-glass-panel::after,
+.kanban-column::after,
+.priority-matrix-card::after,
+.widget-card::after,
+.cozy-card::after,
+.dashboard-card::after,
+.stat-card::after,
+.study-card::after,
+.sanctuary-card::after,
+.profile-card::after,
+.zenith-card::after {
+  content: "" !important;
+  position: absolute !important;
+  bottom: calc(-10px - 6px * var(--cinematic-depth, 1)) !important;
+  left: 10% !important;
+  right: 10% !important;
+  height: calc(16px + 6px * var(--cinematic-depth, 1)) !important;
+  border-radius: 50% !important;
+  filter: blur(calc(10px + 6px * var(--cinematic-depth, 1))) !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+  opacity: calc(0.8 * var(--cinematic-depth, 1)) !important;
+  transform: translateY(calc(3px * var(--cinematic-depth, 1))) scale(calc(0.92 + 0.12 * var(--cinematic-depth, 1))) !important;
+}
+
+/* Staggered Floating Physics Algorithms (Every card has its own unique motion physics & Z-depth) */
+
+/* Card Type 1: Calm Surface Bob (Sky Blue) */
+@keyframes cardFloatAlpha {
+  0%, 100% { transform: translateY(0px) translateZ(0px) rotate(0deg); }
+  50% { transform: translateY(calc(-7px * var(--cinematic-depth, 1))) translateZ(calc(16px * var(--cinematic-depth, 1))) rotate(0.5deg); }
+}
+.apple-glass-card:nth-child(6n + 1),
+.glass-panel:nth-child(6n + 1),
+.apple-glass-panel:nth-child(6n + 1),
+.kanban-column:nth-child(6n + 1),
+.priority-matrix-card:nth-child(6n + 1),
+.widget-card:nth-child(6n + 1),
+.cozy-card:nth-child(6n + 1),
+.dashboard-card:nth-child(6n + 1),
+.stat-card:nth-child(6n + 1),
+.study-card:nth-child(6n + 1),
+.sanctuary-card:nth-child(6n + 1) {
+  animation: cardFloatAlpha 4.8s ease-in-out infinite !important;
+}
+.apple-glass-card:nth-child(6n + 1)::after,
+.glass-panel:nth-child(6n + 1)::after,
+.apple-glass-panel:nth-child(6n + 1)::after,
+.kanban-column:nth-child(6n + 1)::after,
+.priority-matrix-card:nth-child(6n + 1)::after,
+.widget-card:nth-child(6n + 1)::after,
+.cozy-card:nth-child(6n + 1)::after,
+.dashboard-card:nth-child(6n + 1)::after,
+.stat-card:nth-child(6n + 1)::after,
+.study-card:nth-child(6n + 1)::after,
+.sanctuary-card:nth-child(6n + 1)::after {
+  background: radial-gradient(ellipse at center, rgba(0, 240, 255, 0.5) 0%, rgba(56, 189, 248, 0.2) 50%, transparent 70%) !important;
+  animation: reflection-pulse-water 4.8s ease-in-out infinite !important;
+}
+
+/* Card Type 2: Cosmic Zero-G Drift (Deep Violet Nebula) */
+@keyframes cardFloatBeta {
+  0%, 100% { transform: translateY(0px) translateZ(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(calc(-9px * var(--cinematic-depth, 1))) translateZ(calc(22px * var(--cinematic-depth, 1))) rotate(-0.7deg) scale(calc(1 + 0.006 * var(--cinematic-depth, 1))); }
+}
+.apple-glass-card:nth-child(6n + 2),
+.glass-panel:nth-child(6n + 2),
+.apple-glass-panel:nth-child(6n + 2),
+.kanban-column:nth-child(6n + 2),
+.priority-matrix-card:nth-child(6n + 2),
+.widget-card:nth-child(6n + 2),
+.cozy-card:nth-child(6n + 2),
+.dashboard-card:nth-child(6n + 2),
+.stat-card:nth-child(6n + 2),
+.study-card:nth-child(6n + 2),
+.sanctuary-card:nth-child(6n + 2) {
+  animation: cardFloatBeta 6.4s ease-in-out infinite !important;
+  animation-delay: -1.2s !important;
+}
+.apple-glass-card:nth-child(6n + 2)::after,
+.glass-panel:nth-child(6n + 2)::after,
+.apple-glass-panel:nth-child(6n + 2)::after,
+.kanban-column:nth-child(6n + 2)::after,
+.priority-matrix-card:nth-child(6n + 2)::after,
+.widget-card:nth-child(6n + 2)::after,
+.cozy-card:nth-child(6n + 2)::after,
+.dashboard-card:nth-child(6n + 2)::after,
+.stat-card:nth-child(6n + 2)::after,
+.study-card:nth-child(6n + 2)::after,
+.sanctuary-card:nth-child(6n + 2)::after {
+  background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.55) 0%, rgba(124, 58, 237, 0.2) 50%, transparent 70%) !important;
+  animation: reflection-pulse-cosmic 6.4s ease-in-out infinite !important;
+}
+
+/* Card Type 3: Zen Blossom Sway (Jade Emerald) */
+@keyframes cardFloatGamma {
+  0%, 100% { transform: translateY(0px) translateZ(0px) rotate(0deg); }
+  50% { transform: translateY(calc(-6px * var(--cinematic-depth, 1))) translateZ(calc(14px * var(--cinematic-depth, 1))) rotate(0.4deg); }
+}
+.apple-glass-card:nth-child(6n + 3),
+.glass-panel:nth-child(6n + 3),
+.apple-glass-panel:nth-child(6n + 3),
+.kanban-column:nth-child(6n + 3),
+.priority-matrix-card:nth-child(6n + 3),
+.widget-card:nth-child(6n + 3),
+.cozy-card:nth-child(6n + 3),
+.dashboard-card:nth-child(6n + 3),
+.stat-card:nth-child(6n + 3),
+.study-card:nth-child(6n + 3),
+.sanctuary-card:nth-child(6n + 3) {
+  animation: cardFloatGamma 5.4s ease-in-out infinite !important;
+  animation-delay: -2.4s !important;
+}
+.apple-glass-card:nth-child(6n + 3)::after,
+.glass-panel:nth-child(6n + 3)::after,
+.apple-glass-panel:nth-child(6n + 3)::after,
+.kanban-column:nth-child(6n + 3)::after,
+.priority-matrix-card:nth-child(6n + 3)::after,
+.widget-card:nth-child(6n + 3)::after,
+.cozy-card:nth-child(6n + 3)::after,
+.dashboard-card:nth-child(6n + 3)::after,
+.stat-card:nth-child(6n + 3)::after,
+.study-card:nth-child(6n + 3)::after,
+.sanctuary-card:nth-child(6n + 3)::after {
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.5) 0%, rgba(56, 189, 248, 0.2) 50%, transparent 70%) !important;
+  animation: reflection-pulse-nature 5.4s ease-in-out infinite !important;
+}
+
+/* Card Type 4: Stormy Tempest Wave (Electric Cyan & Wind Tilt) */
+@keyframes cardFloatDelta {
+  0%, 100% { transform: translateY(0px) translateX(0px) translateZ(0px) rotate(0deg); }
+  25% { transform: translateY(calc(-7px * var(--cinematic-depth, 1))) translateX(calc(2px * var(--cinematic-depth, 1))) translateZ(calc(18px * var(--cinematic-depth, 1))) rotate(0.8deg); }
+  50% { transform: translateY(calc(-4px * var(--cinematic-depth, 1))) translateX(calc(-2px * var(--cinematic-depth, 1))) translateZ(calc(12px * var(--cinematic-depth, 1))) rotate(-0.9deg); }
+  75% { transform: translateY(calc(-8px * var(--cinematic-depth, 1))) translateX(calc(1px * var(--cinematic-depth, 1))) translateZ(calc(24px * var(--cinematic-depth, 1))) rotate(1.1deg); }
+}
+.apple-glass-card:nth-child(6n + 4),
+.glass-panel:nth-child(6n + 4),
+.apple-glass-panel:nth-child(6n + 4),
+.kanban-column:nth-child(6n + 4),
+.priority-matrix-card:nth-child(6n + 4),
+.widget-card:nth-child(6n + 4),
+.cozy-card:nth-child(6n + 4),
+.dashboard-card:nth-child(6n + 4),
+.stat-card:nth-child(6n + 4),
+.study-card:nth-child(6n + 4),
+.sanctuary-card:nth-child(6n + 4) {
+  animation: cardFloatDelta 4.2s ease-in-out infinite !important;
+  animation-delay: -0.8s !important;
+}
+.apple-glass-card:nth-child(6n + 4)::after,
+.glass-panel:nth-child(6n + 4)::after,
+.apple-glass-panel:nth-child(6n + 4)::after,
+.kanban-column:nth-child(6n + 4)::after,
+.priority-matrix-card:nth-child(6n + 4)::after,
+.widget-card:nth-child(6n + 4)::after,
+.cozy-card:nth-child(6n + 4)::after,
+.dashboard-card:nth-child(6n + 4)::after,
+.stat-card:nth-child(6n + 4)::after,
+.study-card:nth-child(6n + 4)::after,
+.sanctuary-card:nth-child(6n + 4)::after {
+  background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.6) 0%, rgba(14, 165, 233, 0.25) 50%, transparent 70%) !important;
+  animation: reflection-pulse-stormy 3.6s ease-in-out infinite !important;
+}
+
+/* Card Type 5: Hearth Ember Rise (Golden Amber Warmth) */
+@keyframes cardFloatEpsilon {
+  0%, 100% { transform: translateY(0px) translateZ(0px) rotate(0deg); }
+  50% { transform: translateY(calc(-8px * var(--cinematic-depth, 1))) translateZ(calc(20px * var(--cinematic-depth, 1))) rotate(0.6deg); }
+}
+.apple-glass-card:nth-child(6n + 5),
+.glass-panel:nth-child(6n + 5),
+.apple-glass-panel:nth-child(6n + 5),
+.kanban-column:nth-child(6n + 5),
+.priority-matrix-card:nth-child(6n + 5),
+.widget-card:nth-child(6n + 5),
+.cozy-card:nth-child(6n + 5),
+.dashboard-card:nth-child(6n + 5),
+.stat-card:nth-child(6n + 5),
+.study-card:nth-child(6n + 5),
+.sanctuary-card:nth-child(6n + 5) {
+  animation: cardFloatEpsilon 5.8s ease-in-out infinite !important;
+  animation-delay: -3.0s !important;
+}
+.apple-glass-card:nth-child(6n + 5)::after,
+.glass-panel:nth-child(6n + 5)::after,
+.apple-glass-panel:nth-child(6n + 5)::after,
+.kanban-column:nth-child(6n + 5)::after,
+.priority-matrix-card:nth-child(6n + 5)::after,
+.widget-card:nth-child(6n + 5)::after,
+.cozy-card:nth-child(6n + 5)::after,
+.dashboard-card:nth-child(6n + 5)::after,
+.stat-card:nth-child(6n + 5)::after,
+.study-card:nth-child(6n + 5)::after,
+.sanctuary-card:nth-child(6n + 5)::after {
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.55) 0%, rgba(217, 119, 6, 0.2) 50%, transparent 70%) !important;
+  animation: reflection-pulse-cozy 5.5s ease-in-out infinite !important;
+}
+
+/* Card Type 6: Cyber Neon Matrix Pulse (Hot Pink & Strobe Glow) */
+@keyframes cardFloatZeta {
+  0%, 100% { transform: translateY(0px) translateZ(0px) scale(1); }
+  50% { transform: translateY(calc(-7px * var(--cinematic-depth, 1))) translateZ(calc(18px * var(--cinematic-depth, 1))) scale(calc(1 + 0.008 * var(--cinematic-depth, 1))); }
+}
+.apple-glass-card:nth-child(6n + 6),
+.glass-panel:nth-child(6n + 6),
+.apple-glass-panel:nth-child(6n + 6),
+.kanban-column:nth-child(6n + 6),
+.priority-matrix-card:nth-child(6n + 6),
+.widget-card:nth-child(6n + 6),
+.cozy-card:nth-child(6n + 6),
+.dashboard-card:nth-child(6n + 6),
+.stat-card:nth-child(6n + 6),
+.study-card:nth-child(6n + 6),
+.sanctuary-card:nth-child(6n + 6) {
+  animation: cardFloatZeta 4.6s ease-in-out infinite !important;
+  animation-delay: -1.8s !important;
+}
+.apple-glass-card:nth-child(6n + 6)::after,
+.glass-panel:nth-child(6n + 6)::after,
+.apple-glass-panel:nth-child(6n + 6)::after,
+.kanban-column:nth-child(6n + 6)::after,
+.priority-matrix-card:nth-child(6n + 6)::after,
+.widget-card:nth-child(6n + 6)::after,
+.cozy-card:nth-child(6n + 6)::after,
+.dashboard-card:nth-child(6n + 6)::after,
+.stat-card:nth-child(6n + 6)::after,
+.study-card:nth-child(6n + 6)::after,
+.sanctuary-card:nth-child(6n + 6)::after {
+  background: radial-gradient(ellipse at center, rgba(236, 72, 153, 0.55) 0%, rgba(168, 85, 247, 0.25) 50%, transparent 70%) !important;
+  animation: reflection-pulse-cyberpunk 4.2s ease-in-out infinite !important;
+}
+
+/* Enhanced Focus & Hover Interactivity for Floating Cards with Z-axis Elevation */
+.apple-glass-card:hover,
+.glass-panel:hover,
+.apple-glass-panel:hover,
+.kanban-column:hover,
+.priority-matrix-card:hover,
+.widget-card:hover,
+.cozy-card:hover,
+.dashboard-card:hover,
+.stat-card:hover,
+.study-card:hover,
+.sanctuary-card:hover {
+  transform: translateY(calc(-8px * var(--cinematic-depth, 1))) translateZ(calc(30px * var(--cinematic-depth, 1))) scale(calc(1 + 0.01 * var(--cinematic-depth, 1))) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.65), 0 0 calc(30px * var(--cinematic-depth, 1)) rgba(0, 240, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  z-index: 10 !important;
+}
+
+/* Elite 'Iron Man' HUD Internal Glow Animations & Multi-layered Backdrop-Blur */
+@keyframes ironManHudPulse {
+  0%, 100% {
+    box-shadow: inset 0 0 22px rgba(6, 182, 212, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 15px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(6, 182, 212, 0.2);
+  }
+  50% {
+    box-shadow: inset 0 0 42px rgba(6, 182, 212, 0.58), inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 65px rgba(6, 182, 212, 0.42);
+  }
+}
+
+@keyframes ironManHudPulseListening {
+  0%, 100% {
+    box-shadow: inset 0 0 28px rgba(6, 182, 212, 0.48), inset 0 1px 2px rgba(255, 255, 255, 0.35), 0 20px 50px rgba(6, 182, 212, 0.3);
+  }
+  50% {
+    box-shadow: inset 0 0 55px rgba(6, 182, 212, 0.8), inset 0 1px 3px rgba(255, 255, 255, 0.5), 0 25px 75px rgba(6, 182, 212, 0.6);
+  }
+}
+
+@keyframes ironManHudPulseWake {
+  0%, 100% {
+    box-shadow: inset 0 0 28px rgba(245, 158, 11, 0.48), inset 0 1px 2px rgba(255, 255, 255, 0.35), 0 20px 50px rgba(245, 158, 11, 0.3);
+  }
+  50% {
+    box-shadow: inset 0 0 55px rgba(245, 158, 11, 0.8), inset 0 1px 3px rgba(255, 255, 255, 0.5), 0 25px 75px rgba(245, 158, 11, 0.6);
+  }
+}
+
+.hud-iron-man-container {
+  backdrop-filter: blur(36px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(190%) !important;
+  animation: ironManHudPulse 4s ease-in-out infinite;
+}
+
+.hud-iron-man-container.listening {
+  animation: ironManHudPulseListening 2.2s ease-in-out infinite;
+}
+
+.hud-iron-man-container.wakeword {
+  animation: ironManHudPulseWake 2s ease-in-out infinite;
+}
+
+@keyframes dashPulse {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -120;
+  }
+}
+
+/* Consecutive Days Study Habit Streak Glow Animations (Progressive Intensity) */
+@keyframes streakGlowMild {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3), inset 0 0 8px rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.55), inset 0 0 12px rgba(245, 158, 11, 0.3);
+    border-color: rgba(245, 158, 11, 0.8);
+  }
+}
+
+@keyframes streakGlowMedium {
+  0%, 100% {
+    box-shadow: 0 0 16px rgba(249, 115, 22, 0.5), 0 0 30px rgba(245, 158, 11, 0.25), inset 0 0 14px rgba(249, 115, 22, 0.3);
+    border-color: rgba(249, 115, 22, 0.65);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(249, 115, 22, 0.8), 0 0 45px rgba(245, 158, 11, 0.45), inset 0 0 20px rgba(249, 115, 22, 0.5);
+    border-color: rgba(251, 146, 60, 0.95);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes streakGlowFiery {
+  0%, 100% {
+    box-shadow: 0 0 24px rgba(239, 68, 68, 0.65), 0 0 45px rgba(249, 115, 22, 0.45), inset 0 0 18px rgba(239, 68, 68, 0.4);
+    border-color: rgba(239, 68, 68, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 42px rgba(239, 68, 68, 0.95), 0 0 65px rgba(249, 115, 22, 0.7), inset 0 0 26px rgba(239, 68, 68, 0.65);
+    border-color: rgba(252, 165, 165, 1);
+    transform: scale(1.035);
+  }
+}
+
+@keyframes streakGlowSupernova {
+  0% {
+    box-shadow: 0 0 32px rgba(245, 158, 11, 0.85), 0 0 60px rgba(239, 68, 68, 0.6), 0 0 90px rgba(168, 85, 247, 0.4), inset 0 0 24px rgba(245, 158, 11, 0.6);
+    border-color: rgba(251, 191, 36, 0.9);
+  }
+  33% {
+    box-shadow: 0 0 45px rgba(239, 68, 68, 0.95), 0 0 80px rgba(236, 72, 153, 0.7), 0 0 110px rgba(245, 158, 11, 0.5), inset 0 0 30px rgba(239, 68, 68, 0.7);
+    border-color: rgba(244, 63, 94, 1);
+  }
+  66% {
+    box-shadow: 0 0 50px rgba(168, 85, 247, 0.95), 0 0 85px rgba(6, 182, 212, 0.7), 0 0 120px rgba(239, 68, 68, 0.6), inset 0 0 32px rgba(168, 85, 247, 0.7);
+    border-color: rgba(192, 132, 252, 1);
+    transform: scale(1.045);
+  }
+  100% {
+    box-shadow: 0 0 32px rgba(245, 158, 11, 0.85), 0 0 60px rgba(239, 68, 68, 0.6), 0 0 90px rgba(168, 85, 247, 0.4), inset 0 0 24px rgba(245, 158, 11, 0.6);
+    border-color: rgba(251, 191, 36, 0.9);
+    transform: scale(1);
+  }
+}
+
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.8));
+  }
+  25% {
+    transform: scale(1.15) rotate(-3deg);
+    filter: drop-shadow(0 0 10px rgba(249, 115, 22, 1));
+  }
+  50% {
+    transform: scale(0.95) rotate(2deg);
+    filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.9));
+  }
+  75% {
+    transform: scale(1.22) rotate(-1deg);
+    filter: drop-shadow(0 0 14px rgba(245, 158, 11, 1));
+  }
+}
+
+.streak-badge-mild {
+  animation: streakGlowMild 2.8s ease-in-out infinite;
+}
+
+.streak-badge-medium {
+  animation: streakGlowMedium 2.2s ease-in-out infinite;
+}
+
+.streak-badge-fiery {
+  animation: streakGlowFiery 1.6s ease-in-out infinite;
+}
+
+.streak-badge-supernova {
+  animation: streakGlowSupernova 2.4s ease-in-out infinite;
+}
+
+.flame-flicker-active {
+  animation: flameFlicker 1.4s ease-in-out infinite;
+}
+
+
+
+
+

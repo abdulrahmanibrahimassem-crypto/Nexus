@@ -1,0 +1,32 @@
+{
+  "locale": "es",
+  "direction": "ltr",
+  "name": "Spanish",
+  "nativeName": "Español",
+  "translations": {
+    "dashboard.title": "Panel Zenith Core",
+    "dashboard.academic_suite": "Suite Académica y de Desarrollo",
+    "dashboard.command_center": "Centro de Mando Académico",
+    "dashboard.sanctuary_studio": "Estudio Santuario",
+    "dashboard.quick_add": "Añadir Rápido (NLP)",
+    "dashboard.ambient_stream": "Flujo Ambiental Activo",
+    "nav.overview": "Resumen",
+    "nav.study": "Sesiones de Estudio",
+    "nav.analytics": "Analítica",
+    "nav.settings": "Ajustes",
+    "habit.title": "Rastreador de Hábitos y Rachas de Estudio",
+    "habit.subtitle": "Gráfico de ejecución diaria — mapa de calor de 90 días y objetivos",
+    "habit.manage_goals": "Gestionar Objetivos",
+    "habit.log_work": "Registrar Trabajo Profundo (+1.5h)",
+    "habit.current_streak": "Racha Activa Actual",
+    "habit.best_record": "Mejor Récord Personal",
+    "habit.total_hours": "Horas Totales de Estudio Profundo",
+    "habit.todays_objectives": "Objetivos de Aprendizaje de Hoy",
+    "habit.completed": "Completado",
+    "habit.pending": "Pendiente",
+    "habit.contribution_matrix": "Matriz de Contribución de 90 Días",
+    "habit.sessions_completed": "sesiones completadas",
+    "habit.less_consistency": "Menor Consistencia",
+    "habit.elite_flow": "Flujo Élite (Nivel 4)"
+  }
+}

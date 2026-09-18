@@ -1,0 +1,32 @@
+{
+  "locale": "fr",
+  "direction": "ltr",
+  "name": "French",
+  "nativeName": "Français",
+  "translations": {
+    "dashboard.title": "Tableau de Bord Zenith Core",
+    "dashboard.academic_suite": "Suite Académique & Développement",
+    "dashboard.command_center": "Centre de Commandement Académique",
+    "dashboard.sanctuary_studio": "Studio Sanctuaire",
+    "dashboard.quick_add": "Ajout Rapide (NLP)",
+    "dashboard.ambient_stream": "Flux Ambiant Actif",
+    "nav.overview": "Vue d'ensemble",
+    "nav.study": "Sessions d'Étude",
+    "nav.analytics": "Analytique",
+    "nav.settings": "Paramètres",
+    "habit.title": "Suivi des Habitudes et des Séries d'Étude",
+    "habit.subtitle": "Graphique d'exécution quotidienne — carte thermique sur 90 jours et objectifs",
+    "habit.manage_goals": "Gérer les Objectifs",
+    "habit.log_work": "Enregistrer Travail Profond (+1.5h)",
+    "habit.current_streak": "Série Active Actuelle",
+    "habit.best_record": "Meilleur Record Personnel",
+    "habit.total_hours": "Heures Totales d'Étude Profonde",
+    "habit.todays_objectives": "Objectifs d'Apprentissage du Jour",
+    "habit.completed": "Terminé",
+    "habit.pending": "En attente",
+    "habit.contribution_matrix": "Matrice de Contribution sur 90 Jours",
+    "habit.sessions_completed": "sessions terminées",
+    "habit.less_consistency": "Moins de Régularité",
+    "habit.elite_flow": "Flux Élite (Niveau 4)"
+  }
+}

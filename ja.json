@@ -1,0 +1,32 @@
+{
+  "locale": "ja",
+  "direction": "ltr",
+  "name": "Japanese",
+  "nativeName": "日本語",
+  "translations": {
+    "dashboard.title": "Zenith Core ダッシュボード",
+    "dashboard.academic_suite": "アカデミック＆開発スイート",
+    "dashboard.command_center": "アカデミック司令センター",
+    "dashboard.sanctuary_studio": "サンクチュアリスタジオ",
+    "dashboard.quick_add": "クイック追加 (NLP)",
+    "dashboard.ambient_stream": "アクティブアンビエントストリーム",
+    "nav.overview": "概要",
+    "nav.study": "学習セッション",
+    "nav.analytics": "アナリティクス",
+    "nav.settings": "設定",
+    "habit.title": "学習習慣・連続記録トラッカー",
+    "habit.subtitle": "毎日の実行グラフ — 90日間の学習継続ヒートマップと目標",
+    "habit.manage_goals": "毎日の目標を管理",
+    "habit.log_work": "ディープワークを記録 (+1.5h)",
+    "habit.current_streak": "現在の継続日数",
+    "habit.best_record": "自己ベスト記録",
+    "habit.total_hours": "総ディープ学習時間",
+    "habit.todays_objectives": "本日の学習目標",
+    "habit.completed": "完了",
+    "habit.pending": "保留中",
+    "habit.contribution_matrix": "90日間コントリビューションマトリックス",
+    "habit.sessions_completed": "セッション完了",
+    "habit.less_consistency": "低頻度",
+    "habit.elite_flow": "エリートフロー (レベル4)"
+  }
+}
