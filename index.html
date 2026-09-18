@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>A Soft Place to Study</title>
+    <meta name="theme-color" content="#0b0f19" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="A Soft Place to Study" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="alternate icon" type="image/png" href="/pwa-192x192.png" />
+    <meta name="description" content="A calm, Apple-inspired study sanctuary and Zenith Core cyberpunk workstation featuring real-time system telemetry line charts, Oracle-HW PDF analysis engine, pinout auditor, breadboard sandbox, and academic study suites." />
+    <meta property="og:title" content="A Soft Place to Study" />
+    <meta property="og:description" content="A calm, Apple-inspired study sanctuary and Zenith Core cyberpunk workstation featuring real-time system telemetry line charts, Oracle-HW PDF analysis engine, pinout auditor, breadboard sandbox, and academic study suites." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function() {
+        const isBenign = function(msg) {
+          if (!msg) return true;
+          const s = String(msg);
+          return s === 'Script error.' || s.includes('Script error') || s.includes('[vite]') || s.includes('websocket');
+        };
+
+        window.addEventListener('error', function(e) {
+          if (!e.filename || isBenign(e.message)) {
+            e.preventDefault && e.preventDefault();
+            return true;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(e) {
+          if (e.reason && isBenign(e.reason.message || e.reason)) {
+            e.preventDefault && e.preventDefault();
+          }
+        });
+
+        const origWarn = console.warn;
+        console.warn = function(...args) {
+          if (args.some(arg => isBenign(arg))) return;
+          origWarn.apply(console, args);
+        };
+
+        const origError = console.error;
+        console.error = function(...args) {
+          if (args.some(arg => isBenign(arg))) return;
+          origError.apply(console, args);
+        };
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400;1,6..72,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body class="antialiased selection:bg-[#DDD8D0] selection:text-[#2A241E]">
+    <div id="root"></div>
+    <div class="cursor-light"></div>
+    <style>
+    /* إضاءة الماوس الثلاثية الأبعاد بتصميم Apple Glassmorphic */
+    .cursor-light {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 400px;
+      height: 400px;
+      pointer-events: none;
+      background: radial-gradient(
+        circle,
+        rgba(56, 189, 248, 0.15) 0%,
+        rgba(14, 165, 233, 0.05) 40%,
+        transparent 70%
+      );
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      mix-blend-mode: screen;
+      transition: width 0.3s ease, height 0.3s ease;
+    }
+    </style>
+    <script>
+    // حركة ناعمة جداً باستخدام الإحداثيات والـ LERP
+    window.addEventListener('DOMContentLoaded', () => {
+      const cursorLight = document.querySelector('.cursor-light');
+      if (!cursorLight) return;
+
+      let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      let pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      const speed = 0.1;
+
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      function update() {
+        pos.x += (mouse.x - pos.x) * speed;
+        pos.y += (mouse.y - pos.y) * speed;
+
+        cursorLight.style.transform = `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`;
+
+        requestAnimationFrame(update);
+      }
+
+      update();
+    });
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
